@@ -1,0 +1,25 @@
+.my-simple-card {
+  background: yellow;
+  border: 1px solid black;
+  margin-top: 16px;
+  width: 200px;
+
+  img {
+    width: 100%;
+  }
+
+  .bottom-area {
+    padding: 0 8px;
+
+    h1 {
+      margin: 0;
+      padding: 0;
+      color: black;
+    }
+
+    p {
+      margin: 0;
+      padding: 8px 0 8px 0;
+    }
+  }
+}
