@@ -1,17 +1,10 @@
 import React from 'react';
-import '.././index.css';
+import './RegisterActivity.scss';
 
-
-class SimpleCard extends React.Component {
-
-    constructor(props) {
-        super(props)
-    }
-
+class RegisterActivity extends React.Component {
     render() {
-        let imgUrl = "https://images.unsplash.com/photo-1558507652-2d9626c4e67a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cG9ydHJhaXRzfGVufDB8fDB8fA%3D%3D&w=1000&q=80";
+        return <div className={"register-activity"}>
 
-        return <div className={"my-simple-card"}>
             <div className="container login-card-container">
 
                 <div className="login-card">
@@ -19,30 +12,41 @@ class SimpleCard extends React.Component {
                     <div className="bg-img-overlay"></div>
 
                     <div className="card-body">
-                        <h1 className="heading">INSTAGRAM</h1>
+                        <h1 className="heading">REGISTRATION FORM</h1>
+
                         <form className="login-form" action="" encType="multipart/form-data" method="post">
                             <div className="form-group mb-2">
                                 <input className="form-control" type="text" placeholder="ENTER PHONE NUMBER OR EMAIL"
-                                       name="email1"/>
+                                       name="email"/>
                             </div>
                             <div className="form-group mb-2">
+                                <input className="form-control" type="text" placeholder="ENTER YOUR FULL NAME"
+                                       name="fullname"/>
+                            </div>
+                            <div className="form-group mb-2">
+                                <input className="form-control" type="text" placeholder="ENTER YOUR USER NAME"
+                                       name="username"/>
+                            </div>
+
+                            <div className="form-group mb-2">
                                 <input className="form-control" type="password" placeholder="ENTER YOUR PASSWORD"
-                                       name="password1"/>
+                                       name="password"/>
+                            </div>
+                            <div className="form-group mb-2">
+                                <input className="form-control" type="file" name="image"/>
                             </div>
                             <button type="submit" className="btn btn-success form-control btn-xlg submit-btn"
-                                    name="login">LOGIN
+                                    name="login">SUBMIT
                             </button>
                         </form>
 
                         <div className="bottom-half">
                             <div className="or-container mb-3">
                                 <div className="or-line mr-3"></div>
-                                <div className="or">OR</div>
+
                                 <div className="ml-3 or-line"></div>
                             </div>
-                            <div className="registration">DON'T HAVE AN ACCOUNT?
-                                <a href="#" className="register-link">REGISTER NOW</a>
-                            </div>
+
                         </div>
                     </div>
 
@@ -50,7 +54,6 @@ class SimpleCard extends React.Component {
             </div>
         </div>
     }
-
 }
 
-export default SimpleCard;
+export default RegisterActivity;

@@ -1,17 +1,9 @@
 import React from 'react';
-import '.././index.css';
+import './LoginActivity.scss';
 
-
-class SimpleCard extends React.Component {
-
-    constructor(props) {
-        super(props)
-    }
-
+class LoginActivity extends React.Component {
     render() {
-        let imgUrl = "https://images.unsplash.com/photo-1558507652-2d9626c4e67a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cG9ydHJhaXRzfGVufDB8fDB8fA%3D%3D&w=1000&q=80";
-
-        return <div className={"my-simple-card"}>
+        return <div className={"login-activity"}>
             <div className="container login-card-container">
 
                 <div className="login-card">
@@ -50,7 +42,6 @@ class SimpleCard extends React.Component {
             </div>
         </div>
     }
-
 }
 
-export default SimpleCard;
+export default LoginActivity;
