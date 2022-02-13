@@ -7,6 +7,7 @@ import Counter from "./ui/activities/Counter/Counter";
 import LoginActivity from "./ui/activities/LoginActivity/LoginActivity";
 import Message from "./ui/activities/Message/Message";
 import RegisterActivity from "./ui/activities/RegisterActivity/RegisterActivity";
+import Forget from "./ui/activities/Forget/Forget";
 
 class Instagram extends React.Component {
 
@@ -20,7 +21,10 @@ class Instagram extends React.Component {
                 return <Home />
             } else if (activityTag === ACTIVITY_TAG.COUNTER) {
                 return <Counter />
-            } else if (activityTag === ACTIVITY_TAG.LOGIN_ACTIVITY) {
+            }
+            else if (activityTag === ACTIVITY_TAG.FORGET) {
+                return <Forget/>
+            }else if (activityTag === ACTIVITY_TAG.LOGIN_ACTIVITY) {
                 return <LoginActivity />
             } else if (activityTag === ACTIVITY_TAG.MESSAGE) {
                 return <Message />
@@ -28,7 +32,7 @@ class Instagram extends React.Component {
                 return <RegisterActivity />
             }
         } else {
-            urlArgsBundle.setActivityTag(ACTIVITY_TAG.HOME)
+            urlArgsBundle.setActivityTag(ACTIVITY_TAG.LOGIN_ACTIVITY)
             this.props.history.push(urlArgsBundle.getArgsAsUrlParams())
         }
 

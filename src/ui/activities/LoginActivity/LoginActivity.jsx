@@ -1,9 +1,14 @@
 import React from 'react';
+import {withRouter} from "react-router-dom";
 import './LoginActivity.scss';
+import UrlArgsBundle from "../../../core/url_args_bundle";
+import {ACTIVITY_TAG} from "../../../utils/Constants";
 
 class LoginActivity extends React.Component {
     render() {
+        const urlArgsBundle = (new UrlArgsBundle()).prepareFrom(this.props.location.search);
         return <div className={"login-activity"}>
+
             <div className="container login-card-container">
 
                 <div className="login-card">
@@ -22,7 +27,12 @@ class LoginActivity extends React.Component {
                                        name="password1"/>
                             </div>
                             <button type="submit" className="btn btn-success form-control btn-xlg submit-btn"
-                                    name="login">LOGIN
+                                    name="login"
+                                    onClick={() => {
+                                        urlArgsBundle.setActivityTag(ACTIVITY_TAG.HOME)
+                                        this.props.history.push(urlArgsBundle.getArgsAsUrlParams())
+                                    }}
+                            >LOGIN
                             </button>
                         </form>
 
@@ -33,7 +43,20 @@ class LoginActivity extends React.Component {
                                 <div className="ml-3 or-line"></div>
                             </div>
                             <div className="registration">DON'T HAVE AN ACCOUNT?
-                                <a href="#" className="register-link">REGISTER NOW</a>
+                                <a href="#" className="register-link"
+                                   onClick={() => {
+                                       urlArgsBundle.setActivityTag(ACTIVITY_TAG.REGISTER_ACTIVITY)
+                                       this.props.history.push(urlArgsBundle.getArgsAsUrlParams())
+                                   }}>REGISTER NOW</a>
+                            </div>
+                            <br/>
+                            <div className="or-container mb-3">
+                                <div className="or"
+                                     onClick={() => {
+                                         urlArgsBundle.setActivityTag(ACTIVITY_TAG.FORGET)
+                                         this.props.history.push(urlArgsBundle.getArgsAsUrlParams())
+                                     }}>Forget Password?
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -44,4 +67,4 @@ class LoginActivity extends React.Component {
     }
 }
 
-export default LoginActivity;
+export default withRouter(LoginActivity);

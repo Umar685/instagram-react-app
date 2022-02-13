@@ -1,8 +1,12 @@
 import React from 'react';
+import {withRouter} from "react-router-dom";
 import './RegisterActivity.scss';
+import UrlArgsBundle from "../../../core/url_args_bundle";
+import {ACTIVITY_TAG} from "../../../utils/Constants";
 
 class RegisterActivity extends React.Component {
     render() {
+        const urlArgsBundle = (new UrlArgsBundle()).prepareFrom(this.props.location.search);
         return <div className={"register-activity"}>
 
             <div className="container login-card-container">
@@ -36,7 +40,12 @@ class RegisterActivity extends React.Component {
                                 <input className="form-control" type="file" name="image"/>
                             </div>
                             <button type="submit" className="btn btn-success form-control btn-xlg submit-btn"
-                                    name="login">SUBMIT
+                                    name="login"
+                                    onClick={() => {
+                                        urlArgsBundle.setActivityTag(ACTIVITY_TAG.LOGIN_ACTIVITY)
+                                        this.props.history.push(urlArgsBundle.getArgsAsUrlParams())
+                                    }}
+                            >SUBMIT
                             </button>
                         </form>
 
@@ -56,4 +65,4 @@ class RegisterActivity extends React.Component {
     }
 }
 
-export default RegisterActivity;
+export default withRouter(RegisterActivity);
