@@ -12,7 +12,9 @@ class Home extends React.Component {
         this.state = {
             post:[],
             comment:'WRITE A COMMENT HERE!',
-            salman:[]
+            salman:[],
+          count:0
+
         }
     }
 
@@ -48,7 +50,7 @@ class Home extends React.Component {
 
     componentDidMount = () => {
         this.getPost();
-this.getComment();
+        this.getComment();
 
     }
     sendDataToRegisterApi = () => {
@@ -67,8 +69,9 @@ this.getComment();
                 console.log(res.data)
             })
     }
-
-
+increment=() =>{
+    this.setState({ count : this.state.count + 1})
+}
     render() {
 
         console.log(this.state.post)
@@ -132,15 +135,15 @@ this.getComment();
                                              className={"card-img-top"}
                                              alt={"Nothing"}/>
                                         <div className={"icons"}>
-                                            <i className={'far fa-heart fa-lg '}
-                                            />
-
+                                     <i className={'far fa-heart fa-lg '}
+                                           onClick={ this.increment}
+                                     />
                                             <i className={'far fa-comment fa-lg '}/>
                                             <i className={'fab fa-telegram-plane fa-lg '}/>
                                             <i className={'far fa-bookmark fa-lg '}/>&nbsp;
                                             <button className={"btn btn-danger umar"}>Delete</button>
                                         </div>
-                                        <p className={"para"}>1 likes</p>
+                                        <p className={"para"}>{this.state.count} likes</p>
                                         <div className={"card-body"}>
                                             <p>{show['post']} </p>
                                             <p className={"card-text-1"}>{show['discription']}</p>
@@ -173,7 +176,7 @@ this.getComment();
                                                     <button type={"submit"}
                                                             className={"btn btn-success salman"}
                                                             onClick={this.sendDataToRegisterApi}
-                                                   >Comment</button>
+                                                    >Comment</button>
                                                 </p>
                                             </div>
                                         </div>

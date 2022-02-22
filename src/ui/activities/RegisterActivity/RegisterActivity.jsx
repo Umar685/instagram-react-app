@@ -33,7 +33,7 @@ class RegisterActivity extends React.Component {
             }
         }
 
-        axios.post('https://localhost:4000/register_user.php', params, config)
+        axios.post('http://localhost:4000/register_user.php', params, config)
             .then(res => {
                 console.log(res.data)
             })
@@ -119,7 +119,7 @@ class RegisterActivity extends React.Component {
                                        onChange={event => {
                                            this.setState({
                                                ...this.state,
-                                               image: event.target.value
+                                               image: event.target.files[0]
                                            });
                                        }}
                                 />
