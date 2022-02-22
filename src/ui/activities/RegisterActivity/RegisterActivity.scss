@@ -2,13 +2,13 @@ body {
   background-image: url('../../../images/7a.jpg');
   background-size: cover;
 
-
   .login-card-container {
     display: flex;
     flex-direction: row;
     align-items: center;
     height: 100vh;
-margin-left: 110px;
+    margin-left: 110px;
+
     .login-card {
       width: 400px;
       height: 480px;

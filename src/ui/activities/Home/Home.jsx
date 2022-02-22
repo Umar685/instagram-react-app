@@ -3,32 +3,98 @@ import {withRouter} from "react-router-dom";
 import './Home.scss';
 import UrlArgsBundle from "../../../core/url_args_bundle";
 import {ACTIVITY_TAG} from "../../../utils/Constants";
+import axios from "axios";
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            count:0
+            post:[],
+            comment:'WRITE A COMMENT HERE!',
+            salman:[]
         }
     }
+
+    getPost = () => {
+        const params = new FormData();
+
+        const config = {
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        }
+
+        axios.post('http://localhost:4000/deliver.php', params, config)
+            .then(res => {
+                this.setState({...this.state , post: res.data})
+            })
+    }
+
+    getComment =() =>{
+        const params = new FormData();
+
+        const config = {
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        }
+
+        axios.post('http://localhost:4000/deliver2.php', params, config)
+            .then(res => {
+                this.setState({...this.state , salman: res.data})
+            })
+    }
+
+    componentDidMount = () => {
+        this.getPost();
+this.getComment();
+
+    }
+    sendDataToRegisterApi = () => {
+        const params = new FormData();
+
+        params.append('comment', this.state.comment);
+
+        const config = {
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        }
+
+        axios.post('http://localhost:4000/comment.php', params, config)
+            .then(res => {
+                console.log(res.data)
+            })
+    }
+
+
     render() {
-        let {count} = this.state;
+
+        console.log(this.state.post)
         const urlArgsBundle = (new UrlArgsBundle()).prepareFrom(this.props.location.search);
 
         return <div className={"Home"}>
             <nav className={"navbar navbar-expand-lg navbar-light bg-white"}>
 
-                <a className={"navbar-brand"} href="#">Instagram</a>
-                <button className={"navbar-toggler"} type={"button"} data-bs-toggle={"collapse"}
-                        data-bs-target={"#navbarSupportedContent"} aria-controls={"navbarSupportedContent"}
-                        aria-expanded={"false"} aria-label={"Toggle navigation"}>
-                    <span className={"navbar-toggler-icon"}></span>
+                <a className={"navbar-brand"}
+                   href="#">Instagram</a>
+                <button className={"navbar-toggler"}
+                        type={"button"}
+                        data-bs-toggle={"collapse"}
+                        data-bs-target={"#navbarSupportedContent"}
+                        aria-controls={"navbarSupportedContent"}
+                        aria-expanded={"false"}
+                        aria-label={"Toggle navigation"}>
+                    <span className={"navbar-toggler-icon"}/>
                 </button>
-                <div className={"collapse navbar-collapse"} id={"navbarSupportedContent"}>
+                <div className={"collapse navbar-collapse"}
+                     id={"navbarSupportedContent"}>
 
                     <form className={"d-flex"}>
-                        <input className={"form-control me-2 bg-light"} type={"search"} placeholder={"Search"}
+                        <input className={"form-control me-2 bg-light"}
+                               type={"search"}
+                               placeholder={"Search"}
                                aria-label={"Search"}/>
 
                     </form>
@@ -49,242 +115,80 @@ class Home extends React.Component {
             <div className={"row"}>
                 <div className={"col-8"}>
                     <div className={"card_container"}>
-                        <div className={"card"}>
-                            <img src={require('../../../images/frame.jpeg')} className={"card-img-top"}
-                                 alt={"Nothing"}/>
-                            <div className={"icons"}>
-                                <i className={'far fa-heart fa-lg '}
-                                   onClick={() => {
-                                       this.setState({
-                                           count: count + 1
-                                       })
-                                   }}
-                                ></i>
+                        {
+                            this.state.post.map(
+                                show =>
 
-                                <i className={'far fa-comment fa-lg '}></i>
-                                <i className={'fab fa-telegram-plane fa-lg '}></i>
-                                <i className={'far fa-bookmark fa-lg '}></i>
-                            </div>
-                            <p className={"para"}>{count} likes</p>
-                            <div className={"card-body"}>
-                                <p>ubuntumaniac </p>
-                                <p className={"card-text-1"}>Pinephone keyboard arrived. Working gr
-                                    eat with i3wm. This keyboard can turn he Pinephone into a mini Linux laptop..</p>
-                                <hr className={"line"}/>
-                                <div className={"row"}>
+                                    <div className={"card"}>
 
-                                    <p className={"card-text-1"}><i className={"far fa-grin fa-lg"}></i> &nbsp;WRITE A
-                                        COMMENT HERE!</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={"card"}>
-                            <img src={require('../../../images/card_bg.jpeg')} height={"600px"} width={"200px"}
-                                 className={"card-img-top"} alt={"Nothing"}/>
-                            <div className={"icons"}>
-                                <i className={'far fa-heart fa-lg '}></i>
-                                <i className={'far fa-comment fa-lg '}></i>
-                                <i className={'fab fa-telegram-plane fa-lg '}></i>
-                                <i className={'far fa-bookmark fa-lg '}></i>
-                            </div>
-                            <div className={"card-body"}>
-                                <p>ubuntumaniac </p>
-                                <p className={"card-text-1"}>Pinephone keyboard arrived. Working gr
-                                    eat with i3wm. This keyboard can turn <br/>he Pinephone into a mini Linux laptop..
-                                </p>
-                                <hr className={"line"}/>
-                                <p className={"card-text-1"}><i className={"far fa-grin fa-lg"}></i> &nbsp;WRITE A
-                                    COMMENT HERE!</p>
-                            </div>
-                        </div>
-                        <div className={"card"}>
-                            <img src={require('../../../images/7a.jpg')} className={"card-img-top"} alt={"Nothing"}/>
-                            <div className={"icons"}>
-                                <i className={'far fa-heart fa-lg '}></i>
-                                <i className={'far fa-comment fa-lg '}></i>
-                                <i className={'fab fa-telegram-plane fa-lg '}></i>
-                                <i className={'far fa-bookmark fa-lg '}></i>
-                            </div>
-                            <div className={"card-body"}>
-                                <p>ubuntumaniac </p>
-                                <p className={"card-text-1"}>Pinephone keyboard arrived. Working gr
-                                    eat with i3wm. This keyboard can turn <br/>he Pinephone into a mini Linux laptop..
-                                </p>
-                                <hr className={"line"}/>
-                                <p className={"card-text-1"}><i className={"far fa-grin fa-lg"}></i> &nbsp;WRITE A
-                                    COMMENT HERE!</p>
-                            </div>
-                        </div>
-                        <div className={"card"}>
-                            <img src={require('../../../images/7a.jpg')} className={"card-img-top"} alt={"Nothing"}/>
-                            <div className={"icons"}>
-                                <i className={'far fa-heart fa-lg '}></i>
-                                <i className={'far fa-comment fa-lg '}></i>
-                                <i className={'fab fa-telegram-plane fa-lg '}></i>
-                                <i className={'far fa-bookmark fa-lg '}></i>
-                            </div>
-                            <div className={"card-body"}>
-                                <p>ubuntumaniac </p>
-                                <p className={"card-text-1"}>Pinephone keyboard arrived. Working gr
-                                    eat with i3wm. This keyboard can turn <br/>he Pinephone into a mini Linux laptop..
-                                </p>
-                                <hr className={"line"}/>
-                                <p className={"card-text-1"}><i className={"far fa-grin fa-lg"}></i> &nbsp;WRITE A
-                                    COMMENT HERE!</p>
-                            </div>
-                        </div>
-                        <div className={"card"}>
-                            <img src={require('../../../images/download.jpeg')} className={"card-img-top"}
-                                 alt={"Nothing"}/>
-                            <div className={"icons"}>
-                                <i className={'far fa-heart fa-lg '}></i>
-                                <i className={'far fa-comment fa-lg '}></i>
-                                <i className={'fab fa-telegram-plane fa-lg '}></i>
-                                <i className={'far fa-bookmark fa-lg '}></i>
-                            </div>
-                            <div className={"card-body"}>
-                                <p>ubuntumaniac </p>
-                                <p className={"card-text-1"}>Pinephone keyboard arrived. Working gr
-                                    eat with i3wm. This keyboard can turn <br/>he Pinephone into a mini Linux laptop..
-                                </p>
-                                <hr className={"line"}/>
-                                <p className={"card-text-1"}><i className={"far fa-grin fa-lg"}></i> &nbsp;WRITE A
-                                    COMMENT HERE!</p>
-                            </div>
-                        </div>
-                        <div className={"card"}>
-                            <img src={require('../../../images/mahira.jpeg')} className={"card-img-top"}
-                                 alt={"Nothing"}/>
-                            <div className={"icons"}>
-                                <i className={'far fa-heart fa-lg '}></i>
-                                <i className={'far fa-comment fa-lg '}></i>
-                                <i className={'fab fa-telegram-plane fa-lg '}></i>
-                                <i className={'far fa-bookmark fa-lg '}></i>
-                            </div>
-                            <div className={"card-body"}>
-                                <p>ubuntumaniac </p>
-                                <p className={"card-text-1"}>Pinephone keyboard arrived. Working gr
-                                    eat with i3wm. This keyboard can turn <br/>he Pinephone into a mini Linux laptop..
-                                </p>
-                                <hr className={"line"}/>
-                                <p className={"card-text-1"}><i className={"far fa-grin fa-lg"}></i> &nbsp;WRITE A
-                                    COMMENT HERE!</p>
-                            </div>
-                        </div>
-                        <div className={"card"}>
-                            <img src={require('../../../images/good.jpeg')} className={"card-img-top"} alt={"Nothing"}/>
-                            <div className={"icons"}>
-                                <i className={'far fa-heart fa-lg '}></i>
-                                <i className={'far fa-comment fa-lg '}></i>
-                                <i className={'fab fa-telegram-plane fa-lg '}></i>
-                                <i className={'far fa-bookmark fa-lg '}></i>
-                            </div>
-                            <div className={"card-body"}>
-                                <p>ubuntumaniac </p>
-                                <p className={"card-text-1"}>Pinephone keyboard arrived. Working gr
-                                    eat with i3wm. This keyboard can turn <br/>he Pinephone into a mini Linux laptop..
-                                </p>
-                                <hr className={"line"}/>
-                                <p className={"card-text-1"}><i className={"far fa-grin fa-lg"}></i> &nbsp;WRITE A
-                                    COMMENT HERE!</p>
-                            </div>
-                        </div>
-                        <div className={"card"}>
-                            <img src={require('../../../images/umar.jpeg')} className={"card-img-top"} alt={"Nothing"}/>
-                            <div className={"icons"}>
-                                <i className={'far fa-heart fa-lg '}></i>
-                                <i className={'far fa-comment fa-lg '}></i>
-                                <i className={'fab fa-telegram-plane fa-lg '}></i>
-                                <i className={'far fa-bookmark fa-lg '}></i>
-                            </div>
-                            <div className={"card-body"}>
-                                <p>ubuntumaniac </p>
-                                <p className={"card-text-1"}>Pinephone keyboard arrived. Working gr
-                                    eat with i3wm. This keyboard can turn <br/>he Pinephone into a mini Linux laptop..
-                                </p>
-                                <hr className={"line"}/>
-                                <p className={"card-text-1"}><i className={"far fa-grin fa-lg"}></i> &nbsp;WRITE A
-                                    COMMENT HERE!</p>
-                            </div>
-                        </div>
-                        <div className={"card"}>
-                            <img src={require('../../../images/beauty.jpeg')} className={"card-img-top"}
-                                 alt={"Nothing"}/>
-                            <div className={"icons"}>
-                                <i className={'far fa-heart fa-lg '}></i>
-                                <i className={'far fa-comment fa-lg '}></i>
-                                <i className={'fab fa-telegram-plane fa-lg '}></i>
-                                <i className={'far fa-bookmark fa-lg '}></i>
-                            </div>
-                            <div className={"card-body"}>
-                                <p>ubuntumaniac </p>
-                                <p className={"card-text-1"}>Pinephone keyboard arrived. Working gr
-                                    eat with i3wm. This keyboard can turn <br/>he Pinephone into a mini Linux laptop..
-                                </p>
-                                <hr className={"line"}/>
-                                <p className={"card-text-1"}><i className={"far fa-grin fa-lg"}></i> &nbsp;WRITE A
-                                    COMMENT HERE!</p>
-                            </div>
-                        </div>
-                        <div className={"card"}>
-                            <img src={require('../../../images/a.jpeg')} className={"card-img-top"} alt={"Nothing"}/>
-                            <div className={"icons"}>
-                                <i className={'far fa-heart fa-lg '}></i>
-                                <i className={'far fa-comment fa-lg '}></i>
-                                <i className={'fab fa-telegram-plane fa-lg '}></i>
-                                <i className={'far fa-bookmark fa-lg '}></i>
-                            </div>
-                            <div className={"card-body"}>
-                                <p>ubuntumaniac </p>
-                                <p className={"card-text-1"}>Pinephone keyboard arrived. Working gr
-                                    eat with i3wm. This keyboard can turn <br/>he Pinephone into a mini Linux laptop..
-                                </p>
-                                <hr className={"line"}/>
-                                <p className={"card-text-1"}><i className={"far fa-grin fa-lg"}></i> &nbsp;WRITE A
-                                    COMMENT HERE!</p>
-                            </div>
-                        </div>
-                        <div className={"card"}>
-                            <img src={require('../../../images/b.jpeg')} className={"card-img-top"} alt={"Nothing"}/>
-                            <div className={"icons"}>
-                                <i className={'far fa-heart fa-lg '}></i>
-                                <i className={'far fa-comment fa-lg '}></i>
-                                <i className={'fab fa-telegram-plane fa-lg '}></i>
-                                <i className={'far fa-bookmark fa-lg '}></i>
-                            </div>
-                            <div className={"card-body"}>
-                                <p>ubuntumaniac </p>
-                                <p className={"card-text-1"}>Pinephone keyboard arrived. Working gr
-                                    eat with i3wm. This keyboard can turn <br/>he Pinephone into a mini Linux laptop..
-                                </p>
-                                <hr className={"line"}/>
-                                <p className={"card-text-1"}><i className={"far fa-grin fa-lg"}></i> &nbsp;WRITE A
-                                    COMMENT HERE!</p>
-                            </div>
-                        </div>
-                        <div className={"card"}>
-                            <img src={require('../../../images/d.jpeg')} className={"card-img-top"} alt={"Nothing"}/>
-                            <div className={"icons"}>
-                                <i className={'far fa-heart fa-lg '}></i>
-                                <i className={'far fa-comment fa-lg '}></i>
-                                <i className={'fab fa-telegram-plane fa-lg '}></i>
-                                <i className={'far fa-bookmark fa-lg '}></i>
-                            </div>
-                            <div className={"card-body"}>
-                                <p>ubuntumaniac </p>
-                                <p className={"card-text-1"}>Pinephone keyboard arrived. Working gr
-                                    eat with i3wm. This keyboard can turn <br/>he Pinephone into a mini Linux laptop..
-                                </p>
-                                <hr className={"line"}/>
-                                <p className={"card-text-1"}><i className={"far fa-grin fa-lg"}></i> &nbsp;WRITE A
-                                    COMMENT HERE!</p>
-                            </div>
-                        </div>
+                                        <div className={"container1"}>
+                                            <img src={require(`../../../../../instagram_apis/images/${show['image']}`)} className={"picture1"}/>
+                                            <div><b className={"bold"}>{show['hello']}</b>
+
+                                            </div>
+
+                                        </div>
+                                        <img src={require(`../../../../../instagram_apis/images/${show["image"]}`)}
+                                             className={"card-img-top"}
+                                             alt={"Nothing"}/>
+                                        <div className={"icons"}>
+                                            <i className={'far fa-heart fa-lg '}
+                                            />
+
+                                            <i className={'far fa-comment fa-lg '}/>
+                                            <i className={'fab fa-telegram-plane fa-lg '}/>
+                                            <i className={'far fa-bookmark fa-lg '}/>&nbsp;
+                                            <button className={"btn btn-danger umar"}>Delete</button>
+                                        </div>
+                                        <p className={"para"}>1 likes</p>
+                                        <div className={"card-body"}>
+                                            <p>{show['post']} </p>
+                                            <p className={"card-text-1"}>{show['discription']}</p>
+                                            <hr className={"line"}/>
+                                            <div className={"row"}>
+
+                                                <p className={"card-text-1"}>
+                                                    {
+                                                        this.state.salman.map(
+                                                            comment=>
+                                                                <div>
+                                                                    {comment['comment']}
+                                                                </div>
+                                                        )
+                                                    }
+                                                    <i className={"far fa-grin fa-lg"}/>  &nbsp;
+                                                    <input
+
+                                                        type={"text"}
+                                                        placeholder={"WRITE A COMMENT HERE!"}
+                                                        name={"comment"}
+                                                        value={this.state.comment}
+                                                        onChange={event => {
+                                                            this.setState({
+                                                                ...this.state,
+                                                                comment: event.target.value
+                                                            });
+                                                        }}
+                                                    />
+                                                    <button type={"submit"}
+                                                            className={"btn btn-success salman"}
+                                                            onClick={this.sendDataToRegisterApi}
+                                                   >Comment</button>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                            )
+                        }
+
+
                     </div>
                 </div>
                 <div className={"col-4 second"}>
                     <div className={"container"}>
-                        <img src={require('../../../images/frame.jpeg')} className={"picture"}/>
+                        <img src={require('../../../images/frame.jpeg')}
+                             className={"picture"}
+                             alt={"hello"}/>
                         <div><b>adnandani7272</b>
                             <br/>
                             <div className={"adnan"}>Adnan Aslam</div>

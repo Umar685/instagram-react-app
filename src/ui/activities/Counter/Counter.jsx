@@ -1,28 +1,28 @@
-import { Component } from "react";
-import './Counter.scss';
+    import { Component } from "react";
+    import './Counter.scss';
 
-class Counter extends Component {
+    class Counter extends Component {
 
-    constructor(props) {
-        super(props);
+        constructor(props) {
+            super(props);
 
-        this.state = {
-            count: 6
+            this.state = {
+                count: 6
+            }
+        }
+
+        render() {
+            let {count} = this.state;
+
+            return <>
+                <h1>Count: {count}</h1>
+                <button onClick={() => {
+                    this.setState({
+                        count: count + 1
+                    })
+                }}>Increment</button>
+            </>
         }
     }
 
-    render() {
-        let {count} = this.state;
-
-        return <>
-            <h1>Count: {count}</h1>
-            <button onClick={() => {
-                this.setState({
-                    count: count + 1
-                })
-            }}>Increment</button>
-        </>
-    }
-}
-
-export default Counter;
+    export default Counter;

@@ -3,8 +3,44 @@ import {withRouter} from "react-router-dom";
 import './LoginActivity.scss';
 import UrlArgsBundle from "../../../core/url_args_bundle";
 import {ACTIVITY_TAG} from "../../../utils/Constants";
+import axios from "axios";
 
 class LoginActivity extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            email1: 'umar@gmail.com',
+            password1: '12345'
+        }
+    }
+
+    sendDataToRegisterApi = () => {
+        const params = new FormData();
+        params.append('email1', this.state.email1);
+        params.append('password1', this.state.password1);
+        const config = {
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        }
+
+        axios.post('http://localhost:4000/login_user.php', params, config)
+            .then(res => {
+                if (res.data.state === 'NO_USER_FOUND') {
+                    console.log('no user found')
+                } else {
+                    const urlArgsBundle = (new UrlArgsBundle()).prepareFrom(this.props.location.search);
+                    urlArgsBundle.setActivityTag(ACTIVITY_TAG.HOME)
+                    this.props.history.push(urlArgsBundle.getArgsAsUrlParams())
+                }
+            });
+        //
+        // const urlArgsBundle = (new UrlArgsBundle()).prepareFrom(this.props.location.search);
+        // urlArgsBundle.setActivityTag(ACTIVITY_TAG.LOGIN_ACTIVITY)
+        // this.props.history.push(urlArgsBundle.getArgsAsUrlParams())
+    }
+
     render() {
         const urlArgsBundle = (new UrlArgsBundle()).prepareFrom(this.props.location.search);
         return <div className={"login-activity"}>
@@ -17,24 +53,42 @@ class LoginActivity extends React.Component {
 
                     <div className="card-body">
                         <h1 className="heading">INSTAGRAM</h1>
-                        <form className="login-form" action="" encType="multipart/form-data" method="post">
+                        <div className="login-form">
                             <div className="form-group mb-2">
-                                <input className="form-control" type="text" placeholder="ENTER PHONE NUMBER OR EMAIL"
-                                       name="email1"/>
+                                <input
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="EMAIL"
+                                    name="email1"
+                                    value={this.state.email1}
+                                    onChange={event => {
+                                        this.setState({
+                                            ...this.state,
+                                            email1: event.target.value
+                                        });
+                                    }}/>
                             </div>
                             <div className="form-group mb-2">
-                                <input className="form-control" type="password" placeholder="ENTER YOUR PASSWORD"
-                                       name="password1"/>
+                                <input
+                                    className="form-control"
+                                    type="password"
+                                    placeholder="PASSWORD"
+                                    name="password1"
+                                    value={this.state.password1}
+                                    onChange={event => {
+                                        this.setState({
+                                            ...this.state,
+                                            password1: event.target.value
+                                        });
+                                    }}/>
                             </div>
-                            <button type="submit" className="btn btn-success form-control btn-xlg submit-btn"
+                            <button type="submit"
+                                    className="btn btn-success form-control btn-xlg submit-btn"
                                     name="login"
-                                    onClick={() => {
-                                        urlArgsBundle.setActivityTag(ACTIVITY_TAG.HOME)
-                                        this.props.history.push(urlArgsBundle.getArgsAsUrlParams())
-                                    }}
+                                    onClick={this.sendDataToRegisterApi}
                             >LOGIN
                             </button>
-                        </form>
+                        </div>
 
                         <div className="bottom-half">
                             <div className="or-container mb-3">
@@ -43,7 +97,8 @@ class LoginActivity extends React.Component {
                                 <div className="ml-3 or-line"></div>
                             </div>
                             <div className="registration">DON'T HAVE AN ACCOUNT?
-                                <a href="#" className="register-link"
+                                <a href="#"
+                                   className="register-link"
                                    onClick={() => {
                                        urlArgsBundle.setActivityTag(ACTIVITY_TAG.REGISTER_ACTIVITY)
                                        this.props.history.push(urlArgsBundle.getArgsAsUrlParams())
@@ -56,6 +111,14 @@ class LoginActivity extends React.Component {
                                          urlArgsBundle.setActivityTag(ACTIVITY_TAG.FORGET)
                                          this.props.history.push(urlArgsBundle.getArgsAsUrlParams())
                                      }}>Forget Password?
+                                </div>
+                            </div>
+                            <div className="or-container mb-3">
+                                <div className="or"
+                                     onClick={() => {
+                                         urlArgsBundle.setActivityTag(ACTIVITY_TAG.CHANGE)
+                                         this.props.history.push(urlArgsBundle.getArgsAsUrlParams())
+                                     }}>Change Password
                                 </div>
                             </div>
                         </div>

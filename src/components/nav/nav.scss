@@ -1,0 +1,45 @@
+.umar {
+
+  .navbar {
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    position: fixed;
+
+    .navbar-brand {
+      font-size: 30px;
+    }
+
+    .collapse {
+      .fa-facebook-messenger {
+        padding-left: 50px;
+        font-size: 22px;
+      }
+
+      .fa-compass {
+
+        font-size: 22px;
+      }
+
+      .fa-heart {
+
+        font-size: 22px;
+      }
+
+      .d-flex {
+        margin-left: 250px;
+      }
+    }
+
+    .icon_container {
+      display: flex;
+      flex-direction: row;
+      gap: 22px;
+    }
+
+    .navbar-brand {
+      font-family: 'Lobster', cursive;
+      margin-left: 190px;
+    }
+  }
+}

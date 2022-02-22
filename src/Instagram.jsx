@@ -8,6 +8,9 @@ import LoginActivity from "./ui/activities/LoginActivity/LoginActivity";
 import Message from "./ui/activities/Message/Message";
 import RegisterActivity from "./ui/activities/RegisterActivity/RegisterActivity";
 import Forget from "./ui/activities/Forget/Forget";
+import Change from "./ui/activities/Change/Change";
+import Post from "./ui/activities/Post/Post";
+import Nav from "./components/nav/nav";
 
 class Instagram extends React.Component {
 
@@ -18,18 +21,23 @@ class Instagram extends React.Component {
             let activityTag = urlArgsBundle.getActivityTag();
 
             if (activityTag === ACTIVITY_TAG.HOME) {
-                return <Home />
+                return <Home/>
             } else if (activityTag === ACTIVITY_TAG.COUNTER) {
-                return <Counter />
-            }
-            else if (activityTag === ACTIVITY_TAG.FORGET) {
+                return <Counter/>
+            } else if (activityTag === ACTIVITY_TAG.NAV) {
+                return <Nav/>
+            } else if (activityTag === ACTIVITY_TAG.FORGET) {
                 return <Forget/>
-            }else if (activityTag === ACTIVITY_TAG.LOGIN_ACTIVITY) {
-                return <LoginActivity />
+            } else if (activityTag === ACTIVITY_TAG.LOGIN_ACTIVITY) {
+                return <LoginActivity/>
             } else if (activityTag === ACTIVITY_TAG.MESSAGE) {
-                return <Message />
+                return <Message/>
             } else if (activityTag === ACTIVITY_TAG.REGISTER_ACTIVITY) {
-                return <RegisterActivity />
+                return <RegisterActivity/>
+            } else if (activityTag === ACTIVITY_TAG.CHANGE) {
+                return <Change/>
+            } else if (activityTag === ACTIVITY_TAG.POST) {
+                return <Post/>
             }
         } else {
             urlArgsBundle.setActivityTag(ACTIVITY_TAG.LOGIN_ACTIVITY)
