@@ -40,6 +40,8 @@ class RegisterActivity extends React.Component {
     }
 
     render() {
+
+
         return <div className={"register-activity"}>
 
             <div className="container login-card-container">

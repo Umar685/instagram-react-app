@@ -41,6 +41,7 @@ class Post extends React.Component {
     }
 
     render() {
+        let id=localStorage.getItem('id');
         const urlArgsBundle = (new UrlArgsBundle()).prepareFrom(this.props.location.search);
         return <div className={"Post"}>
             <nav className={"navbar navbar-expand-lg navbar-light bg-white"}>
@@ -50,7 +51,8 @@ class Post extends React.Component {
             </nav>
             <div className={"card"}>
                 <i className="fab fa-telegram-plane fa-lg "/>
-                <h5 className={"heading"}>Create Post Here!</h5>
+
+                <h5 className={"heading"}>Create Post Here!  {id}</h5>
                 <div className={"text"}>Enter your post here that you may like to share with yiur friends and family!
                 </div>
                 <div className={"form"}>
@@ -106,6 +108,10 @@ class Post extends React.Component {
                     <br/>
                     <button className={"btn btn-lg btn-primary  form-control"}
                             onClick={this.sendDataToRegisterApi}
+                            onClick={() => {
+                                urlArgsBundle.setActivityTag(ACTIVITY_TAG.HOME)
+                                this.props.history.push(urlArgsBundle.getArgsAsUrlParams())
+                            }}
                     >Create Post
                     </button>
 

@@ -14,7 +14,6 @@ class Home extends React.Component {
             comment:'WRITE A COMMENT HERE!',
             salman:[],
           count:0
-
         }
     }
 
@@ -48,6 +47,7 @@ class Home extends React.Component {
             })
     }
 
+
     componentDidMount = () => {
         this.getPost();
         this.getComment();
@@ -72,9 +72,15 @@ class Home extends React.Component {
 increment=() =>{
     this.setState({ count : this.state.count + 1})
 }
+
     render() {
 
+      let  username=localStorage.getItem('username');
+      let  password1=localStorage.getItem('password1');
+      let email1=localStorage.getItem('email1');
+
         console.log(this.state.post)
+
         const urlArgsBundle = (new UrlArgsBundle()).prepareFrom(this.props.location.search);
 
         return <div className={"Home"}>
@@ -111,6 +117,12 @@ increment=() =>{
                         <i className={'far fa-compass'} />
                         <i className={'far fa-heart'} />
                     </div>
+                    <button className={"btn btn-warning shaheer"}
+                            onClick={() => {
+                                urlArgsBundle.setActivityTag(ACTIVITY_TAG.POST)
+                                this.props.history.push(urlArgsBundle.getArgsAsUrlParams())
+                            }}
+                    >Create post</button>
                 </div>
 
             </nav>
@@ -192,11 +204,16 @@ increment=() =>{
                         <img src={require('../../../images/frame.jpeg')}
                              className={"picture"}
                              alt={"hello"}/>
-                        <div><b>adnandani7272</b>
+                        <div><b>{username}</b>
                             <br/>
-                            <div className={"adnan"}>Adnan Aslam</div>
+                            <div className={"adnan"}>{email1}</div>
                         </div>
-                        <a className={"uncle"} href={"#"}>Switch</a>
+                        <a className={"uncle"} href={"#"}
+                           onClick={() => {
+                               urlArgsBundle.setActivityTag(ACTIVITY_TAG.LOGIN_ACTIVITY)
+                               this.props.history.push(urlArgsBundle.getArgsAsUrlParams())
+                           }}
+                        >Log out</a>
                     </div>
                     <div className={"container"}>
                         <div className={"adnan1"}>Suggestions for you</div>
